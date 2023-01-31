@@ -10,6 +10,10 @@ void draw(){
     ellipse(mouseX, mouseY,40,40);
   }
   
+  // si presiono w pinto de color verde;
+  // si presiono e pinto de color azul;
+  // si presiono r pinto de color rojo;
+  
   if(keyPressed){
     if(key == 'q'){
       background(255);
