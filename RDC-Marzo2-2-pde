@@ -1,0 +1,64 @@
+PImage fuente;
+PImage fuenteColor;
+
+int t1;
+int t2;
+
+void setup(){
+  size(1000,665);
+  fuente = loadImage("fotogatas.jpg");
+  fuente.resize(1000,665);
+  t1 = 25;
+  t2 = 25;
+  float rn[] = {random(2),random(2),random(2),random(2),random(2),random(2)};
+  fuenteColor = fuente.copy();
+  for(int i = 0; i<fuenteColor.pixels.length;i++){
+    color c = fuenteColor.pixels[i];
+    float r = map(red(c),0,255,-TWO_PI*rn[0],TWO_PI*rn[1]);
+    float g = map(green(c),0,255,-TWO_PI*rn[2],TWO_PI*rn[3]);
+    float b = map(blue(c),0,255,-TWO_PI*rn[4],TWO_PI*rn[5]);
+    
+    float r2 = 127+sin(r)*127;
+    float g2 = 127 + sin(g)*127;
+    float b2 = 127 + sin(b)*127;
+    fuenteColor.pixels[i] = color(r2,g2,b2);
+  }
+  
+  
+  for(int i = 0; i< width; i+= t1){
+    for(int j = 0; j < height; j+= t2){
+      for(int k = t2; k>=1; k--){
+        if(k%3==0){
+         dibujaRect(i-(k-t2)/2f,j-(k-t2)/2f,k,k,fuenteColor);
+        }
+        else{
+          dibujaRect(i-(k-t2)/2f,j-(k-t2)/2f,k,k,fuente);
+        }
+      }
+    }
+  }
+  
+  
+}
+
+void keyPressed(){
+
+}
+
+void dibujaRect(float x_, float y_, int w_, int h_, PImage i_){
+      float r = 0;
+      float g = 0;
+      float b = 0;
+      for (int k = 0 ; k < w_; k+=1){
+        for(int l = 0; l < h_; l+=1){
+          color c = i_.get(floor(x_)+k,floor(y_)+l);
+          r +=  red(c);
+          g += green(c);
+          b += blue(c);
+        }
+      }
+      color c = color(r/(w_*h_),g/(w_*h_),b/(w_*h_));
+      noStroke();
+      fill(c);
+      rect(x_,y_,w_,h_);
+}
